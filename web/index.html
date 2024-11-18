@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing movie API</title>
+  <style>
+    article {
+      width: 400px;
+      text-align: center;
+      border: 2px solid gray;
+      padding-block: 10px;
+      margin-bottom: 10px;
+    }
+    img {
+      max-width: 320px;
+    }
+  </style>
+</head>
+<body>
+  <main></main>
+  <script type="module">
+    fetch('http://localhost:1234/movies')
+      .then(res => res.json())
+      .then(data => {
+        const main = document.querySelector('main')
+        
+        main.innerHTML = data.map(movie => {
+          return `
+            <article data-id=${movie.id}>
+              <h2>${movie.title}</h2>
+              <img src=${movie.poster} alt=${movie.title} />
+              <p>${movie.year}</p>
+
+              <button type='button'>Eliminar</button>
+            </article>
+          `
+        }).join('')
+      })
+
+    document.addEventListener('click', (e) => {
+      if (e.target.type !== 'button') return
+
+      const article = e.target.closest('article')
+      const movieId = article.dataset.id
+
+      fetch(`http://localhost:1234/movies/${movieId}`, {
+        method: 'DELETE',
+      })
+        .then(res => {
+          if (res.ok){
+            article.remove()
+          }
+        })
+    })
+  </script>
+</body>
+</html>

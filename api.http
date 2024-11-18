@@ -1,0 +1,30 @@
+### Recuperar todas las películas
+GET http://localhost:1234/movies
+
+### Recuperar una película por id
+GET http://localhost:1234/movies/5ad1a235-0d9c-410a-b32b-220d91689a08
+
+### Recuperar las películas de un género
+GET http://localhost:1234/movies?genre=action
+
+### Añadir una película
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+  "title": "Fight Club", 
+  "year": 1999,
+  "director": "David Fincher",
+  "duration": 169,
+  "poster": "https://i.etsystatic.com/35681979/r/il/dfe3ba/3957859451/il_fullxfull.3957859451_h27r.jpg",
+  "genre": ["Action", "Crime", "Drama"],
+  "rate": 8.8
+}
+
+### Actualizar una película
+PATCH http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+  "year": 1993
+}
